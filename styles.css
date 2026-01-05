@@ -1,0 +1,289 @@
+/* Reset de márgenes y rellenos por defecto */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Fondo general */
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #74ebd5, #ACB6E5);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilo general del contenedor principal (útil para páginas como DOCENTE) */
+.container,
+.page-container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+/* Estilos para los encabezados */
+header h1 {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+}
+
+/* Título general (para páginas como Gestión de Docentes) */
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Sección de formularios generales */
+.form-section {
+    display: none;              /* importante para que funcione showForm */
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+}
+
+.form-section.active {
+    display: block;
+}
+
+.form-section h2 {
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+form label {
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+}
+
+form button {
+    padding: 12px 30px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+form button:hover {
+    background-color: #45a049;
+}
+
+/* Pie de página */
+footer {
+    text-align: center;
+    margin-top: 30px;
+}
+
+footer a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+/* ===================================== */
+/* ESTILOS PERSONALIZADOS PARA LOGIN     */
+/* ===================================== */
+
+.login-container {
+    background-color: white;
+    padding: 40px 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 400px;
+    text-align: center;
+}
+
+.login-container h1 {
+    font-size: 2rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.login-container label {
+    display: block;
+    margin-bottom: 8px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.login-container input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
+
+.login-container button {
+    background-color: #3498db;
+    color: white;
+    padding: 12px;
+    width: 100%;
+    border: none;
+    border-radius: 6px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.login-container button:hover {
+    background-color: #2980b9;
+}
+
+.login-container p {
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #555;
+}
+
+/* ===================================== */
+/* ESTILOS PARA MÓDULO DE DOCENTES       */
+/* ===================================== */
+
+/* enlace "Volver al menú" */
+a.volver {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #2980b9;
+    text-decoration: none;
+}
+
+a.volver:hover {
+    text-decoration: underline;
+}
+
+/* Acordeón DOCENTE */
+h2 {
+    background-color: #8e44ad;
+    color: #fff;
+    padding: 12px 16px;
+    margin: 0 0 10px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-radius: 6px;
+}
+
+.emoji {
+    margin-left: 10px;
+    font-size: 18px;
+}
+
+.accordion-content {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    margin-bottom: 40px;
+}
+
+/* Submenú de botones (Nuevo / Consultar / Editar / Eliminar) */
+.submenu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.submenu button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.submenu button:hover {
+    background-color: #2980b9;
+}
+
+/* Tarjeta de formulario */
+.form-card {
+    background-color: #fafafa;
+    border-radius: 6px;
+    padding: 15px 20px;
+    border: 1px solid #e1e1e1;
+}
+
+/* Grid de campos */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px 16px;
+}
+
+/* Grupo label + input específico para las tarjetas */
+.form-card .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-card .form-group label {
+    font-size: 13px;
+    margin-bottom: 4px;
+    color: #555;
+}
+
+.form-card .form-group input {
+    padding: 8px 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Botones verdes/rojos específicos de las tarjetas */
+.btn-primary,
+.btn-danger {
+    margin-top: 12px;
+    padding: 8px 16px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: #27ae60;
+    color: #fff;
+}
+
+.btn-primary:hover {
+    background-color: #1e8449;
+}
+
+.btn-danger {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+.btn-danger:hover {
+    background-color: #c0392b;
+}
