@@ -78,7 +78,7 @@
 <!-- 🔐 Protección básica -->
 <script>
 if (!localStorage.getItem("usuario")) {
-    window.location.href = "menu.html";
+    window.location.href = "index.html";
 }
 </script>
 
@@ -137,7 +137,7 @@ document.getElementById("rol").textContent = localStorage.getItem("rol") || "Usu
 
 function logout() {
     localStorage.clear();
-    window.location.href = "login.html";
+    window.location.href = "index.html";
 }
 </script>
 
