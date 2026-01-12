@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Titulación</title>
+<link rel="stylesheet" href="../styles.css">
+
+<style>
+/* ======= MISMO ESTILO (sin cambios) ======= */
+.titulacion-page{max-width:1100px;margin:0 auto;padding:30px 20px 40px}
+.titulacion-header{display:flex;justify-content:space-between;margin-bottom:25px}
+.titulacion-card{background:#fff;border-radius:10px;padding:20px 25px;box-shadow:0 3px 10px rgba(0,0,0,.12)}
+.titulacion-cards{display:flex;flex-direction:column;gap:20px}
+.titulacion-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px 16px}
+.titulacion-group{display:flex;flex-direction:column}
+.titulacion-group input{padding:8px;border:1px solid #ccc;border-radius:4px}
+.btn-primary{background:#3498db;color:#fff;border:none;padding:10px 18px;border-radius:6px}
+.btn-danger{background:#e74c3c;color:#fff;border:none;padding:10px 18px;border-radius:6px}
+.mensaje.ok{color:#27ae60}
+.mensaje.error{color:#c0392b}
+</style>
+</head>
+
+<body>
+<div class="titulacion-page">
+
+<header class="titulacion-header">
+  <h1>Gestión de Titulación</h1>
+  <div>Usuario: <strong>Demo</strong></div>
+</header>
+
+<div class="titulacion-cards">
+
+<!-- NUEVA TITULACIÓN -->
+<div class="titulacion-card">
+<h2>Nueva titulación</h2>
+
+<div id="msgNuevo"></div>
+
+<div class="titulacion-grid">
+<input id="nt" placeholder="Nombre del tesista">
+<input id="ga" placeholder="Grado académico">
+<input id="pa" placeholder="Programa académico">
+<input id="ins" placeholder="Institución">
+<input id="tt" placeholder="Tipo de trabajo">
+<input id="nd" placeholder="Nombre del docente">
+<input id="tp" placeholder="Tipo de participación">
+<input id="es" placeholder="Estatus">
+</div>
+
+<button class="btn-primary" onclick="guardar()">Guardar titulación</button>
+</div>
+
+<!-- CONSULTAR -->
+<div class="titulacion-card">
+<h2>Consultar titulación</h2>
+
+<input id="buscar" placeholder="Nombre del tesista">
+<button class="btn-primary" onclick="buscar()">Buscar</button>
+
+<div id="resultado"></div>
+</div>
+
+</div>
+</div>
+
+<script>
+let data = JSON.parse(localStorage.getItem("titulaciones")) || [];
+
+function guardar(){
+  if(!nt.value || !ga.value || !pa.value){
+    msgNuevo.innerHTML='<p class="mensaje error">Faltan datos obligatorios</p>';
+    return;
+  }
+  data.push({
+    id:Date.now(),
+    nt:nt.value,ga:ga.value,pa:pa.value,ins:ins.value,
+    tt:tt.value,nd:nd.value,tp:tp.value,es:es.value
+  });
+  localStorage.setItem("titulaciones",JSON.stringify(data));
+  msgNuevo.innerHTML='<p class="mensaje ok">Titulación guardada</p>';
+}
+
+function buscar(){
+  const r=data.find(t=>t.nt.toLowerCase().includes(buscar.value.toLowerCase()));
+  if(!r){
+    resultado.innerHTML='<p class="mensaje error">No encontrada</p>';return;
+  }
+  resultado.innerHTML=`
+    <p><strong>${r.nt}</strong> (${r.pa})</p>
+    <button class="btn-danger" onclick="eliminar(${r.id})">Eliminar</button>
+  `;
+}
+
+function eliminar(id){
+  if(confirm("¿Eliminar titulación?")){
+    data=data.filter(t=>t.id!==id);
+    localStorage.setItem("titulaciones",JSON.stringify(data));
+    resultado.innerHTML='<p class="mensaje ok">Eliminada</p>';
+  }
+}
+</script>
+
+</body>
+</html>

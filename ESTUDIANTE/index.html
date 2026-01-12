@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Estudiantes</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        body { display: block; }
+
+        .estudiante-page {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 30px 20px 40px;
+        }
+
+        .estudiante-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .estudiante-header h1 {
+            margin: 0;
+            font-size: 2rem;
+            color: #333;
+        }
+
+        .estudiante-header-right {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            font-size: 0.9rem;
+        }
+
+        .btn-link {
+            padding: 8px 16px;
+            background-color: #e74c3c;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+
+        .estudiante-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .estudiante-card {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+        }
+
+        .estudiante-card h2 {
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .estudiante-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 12px 16px;
+        }
+
+        .estudiante-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .estudiante-group label {
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+
+        .estudiante-group input {
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+        }
+
+        .btn-primary, .btn-danger {
+            margin-top: 15px;
+            padding: 10px 18px;
+            border-radius: 6px;
+            border: none;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .btn-primary { background-color: #3498db; }
+        .btn-danger  { background-color: #e74c3c; }
+
+        .mensaje { margin-top: 10px; font-size: 0.9rem; }
+        .ok { color: #27ae60; }
+        .error { color: #c0392b; }
+    </style>
+</head>
+
+<body>
+<div class="estudiante-page">
+
+    <header class="estudiante-header">
+        <h1>Gestión de Estudiantes</h1>
+        <div class="estudiante-header-right">
+            <span>Usuario: <strong>Demo</strong></span>
+            <a href="#" class="btn-link">Volver al menú</a>
+        </div>
+    </header>
+
+    <div class="estudiante-cards">
+
+        <!-- NUEVO ESTUDIANTE -->
+        <div class="estudiante-card">
+            <h2>Nuevo estudiante</h2>
+
+            <form id="formNuevo">
+                <div class="estudiante-grid">
+                    <div class="estudiante-group">
+                        <label>Matrícula</label>
+                        <input required id="matricula">
+                    </div>
+                    <div class="estudiante-group">
+                        <label>Nombres</label>
+                        <input required id="nombres">
+                    </div>
+                    <div class="estudiante-group">
+                        <label>Primer apellido</label>
+                        <input required id="apellido1">
+                    </div>
+                    <div class="estudiante-group">
+                        <label>Segundo apellido</label>
+                        <input id="apellido2">
+                    </div>
+                    <div class="estudiante-group">
+                        <label>CURP</label>
+                        <input id="curp">
+                    </div>
+                    <div class="estudiante-group">
+                        <label>Correo electrónico</label>
+                        <input type="email" id="correo">
+                    </div>
+                    <div class="estudiante-group">
+                        <label>Estatus</label>
+                        <input id="estatus">
+                    </div>
+                </div>
+
+                <button class="btn-primary">Guardar estudiante</button>
+                <div id="msgNuevo" class="mensaje"></div>
+            </form>
+        </div>
+
+        <!-- CONSULTAR -->
+        <div class="estudiante-card">
+            <h2>Consultar estudiante</h2>
+
+            <input id="buscar" placeholder="Matrícula o nombre">
+            <button class="btn-primary" onclick="buscarEstudiante()">Buscar</button>
+
+            <div id="resultado"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+let estudiantes = JSON.parse(localStorage.getItem("estudiantes")) || [];
+
+document.getElementById("formNuevo").onsubmit = e => {
+    e.preventDefault();
+
+    const est = {
+        matricula: matricula.value,
+        nombres: nombres.value,
+        apellido1: apellido1.value,
+        apellido2: apellido2.value,
+        curp: curp.value,
+        correo: correo.value,
+        estatus: estatus.value
+    };
+
+    estudiantes.push(est);
+    localStorage.setItem("estudiantes", JSON.stringify(estudiantes));
+
+    msgNuevo.textContent = "Estudiante guardado exitosamente";
+    msgNuevo.className = "mensaje ok";
+    e.target.reset();
+};
+
+function buscarEstudiante() {
+    const q = buscar.value.toLowerCase();
+    const e = estudiantes.find(x =>
+        x.matricula === q ||
+        x.nombres.toLowerCase().includes(q)
+    );
+
+    if (!e) {
+        resultado.innerHTML = `<p class="error">No encontrado</p>`;
+        return;
+    }
+
+    resultado.innerHTML = `
+        <hr>
+        <p><strong>${e.matricula}</strong> - ${e.nombres} ${e.apellido1}</p>
+        <button class="btn-danger" onclick="eliminar('${e.matricula}')">Eliminar</button>
+    `;
+}
+
+function eliminar(m) {
+    if (!confirm("¿Eliminar estudiante?")) return;
+    estudiantes = estudiantes.filter(e => e.matricula !== m);
+    localStorage.setItem("estudiantes", JSON.stringify(estudiantes));
+    resultado.innerHTML = `<p class="ok">Estudiante eliminado</p>`;
+}
+</script>
+
+</body>
+</html>

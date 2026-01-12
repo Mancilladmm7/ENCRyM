@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Programa Académico</title>
+    <link rel="stylesheet" href="../styles.css">
+
+    <style>
+        .page-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 10px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+
+        .danger {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+
+<div class="page-container">
+
+    <h1>Gestión de Programas Académicos</h1>
+
+    <!-- NUEVO PROGRAMA -->
+    <div class="card">
+        <h2>Registrar nuevo programa</h2>
+
+        <input id="nombre" placeholder="Nombre del programa">
+        <input id="responsable" placeholder="Responsable">
+        <select id="estatus">
+            <option>Activo</option>
+            <option>Inactivo</option>
+        </select>
+
+        <button onclick="guardarPrograma()">Guardar Programa</button>
+    </div>
+
+    <!-- BUSCAR -->
+    <div class="card">
+        <h2>Consultar programas</h2>
+        <button onclick="mostrarProgramas()">Mostrar programas</button>
+
+        <ul id="lista"></ul>
+    </div>
+
+</div>
+
+<script>
+let programas = [];
+
+function guardarPrograma() {
+    const programa = {
+        nombre: nombre.value,
+        responsable: responsable.value,
+        estatus: estatus.value
+    };
+
+    programas.push(programa);
+    alert("Programa registrado (simulado)");
+    mostrarProgramas();
+}
+
+function mostrarProgramas() {
+    lista.innerHTML = "";
+    programas.forEach((p, i) => {
+        lista.innerHTML += `
+            <li>
+                <strong>${p.nombre}</strong> — ${p.responsable} (${p.estatus})
+                <button class="danger" onclick="eliminar(${i})">Eliminar</button>
+            </li>
+        `;
+    });
+}
+
+function eliminar(index) {
+    programas.splice(index, 1);
+    mostrarProgramas();
+}
+</script>
+
+</body>
+</html>

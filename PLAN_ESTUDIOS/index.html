@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Gestión de Planes de Estudio</title>
+<link rel="stylesheet" href="../styles.css">
+
+<style>
+/* === ESTILOS ORIGINALES (SIN CAMBIOS) === */
+.page-container{max-width:1200px;margin:30px auto;padding:20px 30px;background:#f5f5f5;border-radius:12px;box-shadow:0 10px 25px rgba(0,0,0,.1)}
+.top-bar{display:flex;justify-content:space-between;margin-bottom:10px}
+.back-link{text-decoration:none;color:#2c3e50}
+.top-user{font-size:.9rem}
+.cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.card-box{background:#fff;border-radius:10px;box-shadow:0 3px 8px rgba(0,0,0,.08)}
+.card-header-purple{background:#8e44ad;color:#fff;padding:12px 18px;font-size:1.2rem}
+.card-body{padding:18px}
+.form-row{display:flex;gap:15px;margin-bottom:12px}
+.form-group{flex:1}
+label{font-size:.9rem;font-weight:bold}
+input,select{width:100%;padding:8px;border-radius:6px;border:1px solid #ccc}
+.btn-primary{background:#3498db;color:#fff;border:none;padding:8px 18px;border-radius:6px;cursor:pointer}
+.btn-danger{background:#e74c3c;color:#fff}
+table{width:100%;border-collapse:collapse;margin-top:12px}
+th,td{border:1px solid #ddd;padding:6px;font-size:.85rem}
+th{background:#ecf0f1}
+.malla-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:15px;margin-top:20px}
+.malla-col{background:#fff;padding:10px;border-radius:8px}
+</style>
+</head>
+
+<body>
+<div class="page-container">
+
+<div class="top-bar">
+    <a href="#" class="back-link">← Volver al menú</a>
+    <div class="top-user">Usuario: <strong>Demo</strong></div>
+</div>
+
+<h1>Gestión de Planes de Estudio</h1>
+
+<div class="cards-grid">
+
+<!-- NUEVO PLAN -->
+<div class="card-box">
+<div class="card-header-purple">Registrar nuevo plan</div>
+<div class="card-body">
+<form id="formPlan">
+<input placeholder="Programa académico" id="programa" required>
+<input placeholder="Nombre del plan" id="nombrePlan" required>
+<button class="btn-primary">Guardar plan</button>
+</form>
+</div>
+</div>
+
+<!-- NUEVO ESPACIO -->
+<div class="card-box">
+<div class="card-header-purple">Registrar espacio curricular</div>
+<div class="card-body">
+<form id="formEspacio">
+<input placeholder="Plan" id="planEspacio" required>
+<input placeholder="Nombre espacio" id="nombreEspacio" required>
+<input placeholder="Semestre" type="number" id="semestre">
+<input placeholder="Créditos" type="number" id="creditos">
+<button class="btn-primary">Guardar espacio</button>
+</form>
+</div>
+</div>
+
+</div>
+
+<!-- CONSULTA -->
+<div class="card-box">
+<div class="card-header-purple">Consultar plan</div>
+<div class="card-body">
+<input id="buscarPlan" placeholder="Nombre del plan">
+<button class="btn-primary" onclick="consultar()">Consultar</button>
+<div id="resultado"></div>
+</div>
+</div>
+
+</div>
+
+<script>
+let planes = JSON.parse(localStorage.getItem("planes")) || [];
+let espacios = JSON.parse(localStorage.getItem("espacios")) || [];
+
+document.getElementById("formPlan").onsubmit = e=>{
+e.preventDefault();
+planes.push({programa:programa.value,nombre:nombrePlan.value});
+localStorage.setItem("planes",JSON.stringify(planes));
+alert("Plan guardado");
+e.target.reset();
+};
+
+document.getElementById("formEspacio").onsubmit = e=>{
+e.preventDefault();
+espacios.push({
+plan:planEspacio.value,
+nombre:nombreEspacio.value,
+semestre:semestre.value,
+creditos:creditos.value
+});
+localStorage.setItem("espacios",JSON.stringify(espacios));
+alert("Espacio guardado");
+e.target.reset();
+};
+
+function consultar(){
+const p = buscarPlan.value;
+const esp = espacios.filter(e=>e.plan===p);
+if(!esp.length){resultado.innerHTML="Sin espacios";return;}
+let html="<table><tr><th>Sem</th><th>Nombre</th><th>Créditos</th></tr>";
+esp.forEach(e=>{
+html+=`<tr><td>${e.semestre}</td><td>${e.nombre}</td><td>${e.creditos}</td></tr>`;
+});
+html+="</table>";
+resultado.innerHTML=html;
+}
+</script>
+
+</body>
+</html>

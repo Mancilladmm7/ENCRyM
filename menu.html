@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Menú principal - Gestión Académica</title>
+    <link rel="stylesheet" href="styles.css">
+
+    <style>
+        .menu-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .menu-user-info {
+            font-size: 0.95rem;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .menu-card {
+            background-color: #ffffff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+            text-align: center;
+        }
+
+        .menu-card h2 {
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            color: #333;
+        }
+
+        .menu-card p {
+            font-size: 0.95rem;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .menu-card a {
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: #3498db;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
+
+        .menu-card a:hover {
+            background-color: #2980b9;
+        }
+
+        .logout-btn {
+            padding: 8px 14px;
+            background-color: #e74c3c;
+            border: none;
+            border-radius: 6px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- 🔐 Protección básica -->
+<script>
+if (!localStorage.getItem("usuario")) {
+    window.location.href = "login.html";
+}
+</script>
+
+<div class="page-container">
+
+    <div class="menu-header">
+        <div>
+            <h1>Gestión Académica</h1>
+            <div class="menu-user-info">
+                Bienvenido, <strong id="usuario"></strong>
+                (<span id="rol"></span>)
+            </div>
+        </div>
+
+        <button class="logout-btn" onclick="logout()">Cerrar sesión</button>
+    </div>
+
+    <div class="menu-grid">
+
+        <div class="menu-card">
+            <h2>Docentes</h2>
+            <p>Registrar, consultar, editar y eliminar información de docentes.</p>
+            <a href="DOCENTE/index.html">Ir a Docentes</a>
+        </div>
+
+        <div class="menu-card">
+            <h2>Estudiantes</h2>
+            <p>Gestión de estudiantes: altas, consultas y actualizaciones.</p>
+            <a href="ESTUDIANTE/index.html">Ir a Estudiantes</a>
+        </div>
+
+        <div class="menu-card">
+            <h2>Titulación</h2>
+            <p>Registro y seguimiento de procesos de titulación.</p>
+            <a href="TITULACION/index.html">Ir a Titulación</a>
+        </div>
+
+        <div class="menu-card">
+            <h2>Programa Académico</h2>
+            <p>Altas, consultas y actualizaciones.</p>
+            <a href="PROGRAMA_ACADEMICO/index.html">Ir a Programa</a>
+        </div>
+
+        <div class="menu-card">
+            <h2>Plan de Estudios</h2>
+            <p>Definición de planes y espacios curriculares.</p>
+            <a href="PLAN_ESTUDIOS/index.html">Ir a Plan de estudios</a>
+        </div>
+
+    </div>
+</div>
+
+<script>
+document.getElementById("usuario").textContent = localStorage.getItem("usuario");
+document.getElementById("rol").textContent = localStorage.getItem("rol") || "Usuario";
+
+function logout() {
+    localStorage.clear();
+    window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>
